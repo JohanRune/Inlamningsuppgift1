@@ -1,6 +1,7 @@
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /*
 Inlämningsuppgit i kursen Funktionell Programmering för JAVA-programmet
@@ -23,35 +24,79 @@ public class RewriteMe {
     public List<Question> questions = database.getQuestions();
 
     //Skriv en funktioner som returnerar hur många frågor det finns i databasen?
+    //fungerar
     public int getAmountOfQuestionsInDatabase(){
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        return (int) questions.stream().count();
+
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     //Hur många frågor finns i databasen för en viss, given kategori (som ges som inparameter)
+    //fungerar
     public int getAmountOfQuestionsForACertainCategory(Category category){
-        throw new UnsupportedOperationException("Not supported yet.");
 
+        return antalFrågorIKategori(category, questions);
     }
+
+    //metod till getAmountOfQuestionsForACertainCategory
+    public int antalFrågorIKategori (Category category, List<Question> lista){
+        return (int) lista.stream().filter(s -> s.getCategory().equals(category)).count();
+    }
+
 
     //Skapa en lista innehållandes samtliga frågesträngar i databasen
+    // fungerar
     public List<String> getListOfAllQuestions(){
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        return questions.stream().map (b -> b.getQuestionString()).collect(Collectors.toList());
+
+//        throw new UnsupportedOperationException("Not supported yet.");
     }
+
+
+
+
+
+
 
     //Skapa en lista innehållandes samtliga frågesträngar där frågan tillhör en viss kategori
     //Kategorin ges som inparameter
+    //fungerar
     public List<String> getAllQuestionStringsBelongingACategory(Category category){
-        throw new UnsupportedOperationException("Not supported yet.");
 
+
+        return frågorIKategori(category, questions);
+
+        //throw new UnsupportedOperationException("Not supported yet.");
+
+    }
+
+    //metod till getAllQuestionStringsBelongingACategory
+    public List<String> frågorIKategori (Category category, List<Question> lista){
+        return lista.stream().filter(s -> s.getCategory().equals(category)).map(b -> b.getQuestionString()).collect(Collectors.toList());
     }
 
     //Skapa en lista av alla svarsalternativ, där varje svarsalternativ får förekomma
     // en och endast en gång i den lista som du ska returnera
+    //fungerar
     public List<String> getAllAnswerOptionsDistinct(){
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        //List<List<String>> listaMedListor = questions.stream().map(b -> b.getAllAnswers()).collect(Collectors.toList());
+        //return listaMedListor.stream().flatMap(value -> value.stream()).distinct().collect(Collectors.toList());
+
+        return questions.stream().map(b -> b.getAllAnswers()).collect(Collectors.toList()).stream().flatMap(value -> value.stream()).distinct().collect(Collectors.toList());
+
+
+        //        throw new UnsupportedOperationException("Not supported yet.");
 
     }
+
+
+
+
+
+
 
 
     //Finns en viss sträng, given som inparameter, som svarsalternativ till någon fråga i vår databas?
