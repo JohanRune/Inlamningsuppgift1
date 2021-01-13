@@ -133,12 +133,6 @@ public class RewriteMe {
 
 
 
-
-
-
-
-
-
         //Skapa en funktion som hittar det svarsalternativ som har flest bokstäver, i en kategori, given som inparameter
     // OBS: Du måste använda Reduce!
     public String getLongestLettercountAnwerInAGivenCategory(Category c)
