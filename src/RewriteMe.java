@@ -3,6 +3,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.groupingBy;
+
 /*
 Inlämningsuppgit i kursen Funktionell Programmering för JAVA-programmet
 För samtliga funktioner i denna fil, byt ut "throw UnSupportedException"-raden
@@ -85,41 +87,59 @@ public class RewriteMe {
         //List<List<String>> listaMedListor = questions.stream().map(b -> b.getAllAnswers()).collect(Collectors.toList());
         //return listaMedListor.stream().flatMap(value -> value.stream()).distinct().collect(Collectors.toList());
 
-        return questions.stream().map(b -> b.getAllAnswers()).collect(Collectors.toList()).stream().flatMap(value -> value.stream()).distinct().collect(Collectors.toList());
+        return questions.stream().map(b -> b.getAllAnswers()).collect(Collectors.toList())
+                .stream().flatMap(f -> f.stream()).distinct().collect(Collectors
+                        .toList());
 
 
         //        throw new UnsupportedOperationException("Not supported yet.");
 
     }
 
-
-
-
-
-
-
-
     //Finns en viss sträng, given som inparameter, som svarsalternativ till någon fråga i vår databas?
+    //Fungerar.
     public boolean isThisAnAnswerOption(String answerCandidate){
-        throw new UnsupportedOperationException("Not supported yet.");
 
+        return questions.stream().map(l -> l.getAllAnswers())
+                .collect(Collectors.toList()).stream().flatMap(f -> f.stream())
+                .anyMatch(l -> l.equalsIgnoreCase(answerCandidate));
     }
+
+
 
     //Hur ofta förekommer ett visst svarsalternativ, givet som inparameter, i databasen
+    //fungerar
     public int getAnswerCandidateFrequncy(String answerCandidate){
 
-        throw new UnsupportedOperationException("Not supported yet.");
-
+        return (int) questions.stream().map(l -> l.getAllAnswers())
+                .collect(Collectors.toList()).stream().flatMap(f -> f.stream())
+                .filter(l -> l.equalsIgnoreCase(answerCandidate)).count();
     }
+
+
+
 
     //Skapa en Map där kategorierna är nycklar och värdena är en lista
     //av de frågesträngar som tillhör varje kategori
     public Map<Category, List<String>> getQuestionGroupedByCategory(){
+        // först gör om listan med frågeobjekt till en lista med kategori och frågor.
+
+
+        //return questions.stream().collect(groupingBy(n -> n.));
+
 
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    //Skapa en funktion som hittar det svarsalternativ som har flest bokstäver, i en kategori, given som inparameter
+
+
+
+
+
+
+
+
+        //Skapa en funktion som hittar det svarsalternativ som har flest bokstäver, i en kategori, given som inparameter
     // OBS: Du måste använda Reduce!
     public String getLongestLettercountAnwerInAGivenCategory(Category c)
     {
